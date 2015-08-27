@@ -1,5 +1,5 @@
 # AutoCompleteEditText
-自动补全EditText
+自动补全EditText，[我的博客](http://sumile.cn/archives/797 "我的博客")
 # 效果 #
 ![image](https://github.com/wudkj/AutoCompleteEditText/raw/master/screen/autocomplete.gif)
 ## 使用方法   
@@ -14,6 +14,19 @@
 
         <requestFocus />
     </cn.sumile.autocompleteedittext.AutoCompleteEditText>
+
+在代码中的调用
+
+    private ArrayList values = new ArrayList();
+    values.add("baidu.com");
+    values.add("sumile.cn");
+    values.add("sunile.cn");
+    values.add("sunule.cn");
+    values.add("samile.cn");
+    values.add("sakile.cn");
+    et = (SelectText) findViewById(R.id.et);
+    et.setResultsValues(values);
+
 # 注意事项： #
 使用jar包或者单独的AutoCompleteEditText.java文件都可以。
 
