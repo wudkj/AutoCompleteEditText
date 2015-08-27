@@ -1,0 +1,27 @@
+package cn.sumile.autocompleteedittext;
+
+import java.util.ArrayList;
+
+import android.os.Bundle;
+import android.support.v7.app.ActionBarActivity;
+
+public class MainActivity extends ActionBarActivity {
+
+	private AutoCompleteEditText et;
+	private ArrayList values = new ArrayList();
+
+	@Override
+	protected void onCreate(Bundle savedInstanceState) {
+		super.onCreate(savedInstanceState);
+		setContentView(R.layout.activity_main);
+		values.add("baidu.com");
+		values.add("sumile.cn");
+		values.add("sunile.cn");
+		values.add("sunule.cn");
+		values.add("samile.cn");
+		values.add("sakile.cn");
+		et = (AutoCompleteEditText) findViewById(R.id.et);
+		et.setResultsValues(values);
+	}
+
+}

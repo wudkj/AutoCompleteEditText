@@ -1,0 +1,92 @@
+package cn.sumile.autocompleteedittext;
+
+import java.util.ArrayList;
+
+import android.content.Context;
+import android.text.Editable;
+import android.text.TextWatcher;
+import android.util.AttributeSet;
+import android.widget.EditText;
+
+public class AutoCompleteEditText extends EditText {
+	private ArrayList<String> mResultsValues = new ArrayList<String>();
+
+	/**
+	 * @param mResultsValues
+	 *            自动提示的字符串list
+	 */
+	public void setResultsValues(ArrayList<String> mResultsValues) {
+		this.mResultsValues = mResultsValues;
+	}
+
+	public AutoCompleteEditText(Context context) {
+		this(context, null);
+	}
+
+	public AutoCompleteEditText(Context context, AttributeSet attrs) {
+		this(context, attrs, 0);
+	}
+
+	public AutoCompleteEditText(Context context, AttributeSet attrs, int defStyle) {
+		super(context, attrs, defStyle);
+		this.addTextChangedListener(new TextWatcher() {
+			String strNow = null;
+			String strOld = null;
+			int strLength = -1;
+
+			@Override
+			public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+			}
+
+			@Override
+			public void onTextChanged(CharSequence s, int start, int before, int count) {
+				strNow = s.toString();
+			}
+
+			@Override
+			public void afterTextChanged(Editable s) {
+				int startPositon = AutoCompleteEditText.this.getSelectionStart();
+				int endPositon;
+				// 第一阶段代码
+				if (strOld != null) {
+					//
+					if (strOld.length() != 0)
+						if (strOld.equals(strNow)) {
+							// 判断是否是结尾
+							strOld = strNow;
+							return;
+						}
+					if (strNow.length() <= strOld.length()) {
+						// 防止删除的时候重新进入到第二阶段代码
+						strOld = strNow;
+						return;
+					}
+				}
+				// 第二阶段代码
+				for (int i = 0; i < mResultsValues.size(); i++) {
+					strDef = mResultsValues.get(i);
+					if (strDef.startsWith(strNow) && !strDef.equals(strNow)) {
+						// 防止用户在从最后一位删除字符的时候字符串重新变回元字符串（如sumile,删除，成为sumile，两者的区别是后面的sumile中的e是被选中的状态）
+						if (strDef.substring(0, strDef.length() - 1).equals(strNow)) {
+							strOld = strNow;
+							return;
+						}
+						// 获得字符串的末尾
+						endPositon = strDef.length();
+						// 将上一个字符设置为新的字符
+						strOld = strNow;
+						// 设置文本显示
+						AutoCompleteEditText.this.setText(strDef);
+						// 设置文本选择
+						AutoCompleteEditText.this.setSelection(startPositon, endPositon);
+						// 这个break貌似不起作用，但是也没有把它删掉
+						break;
+					}
+				}
+			}
+		});
+	}
+
+	private String strDef = null;
+
+}
