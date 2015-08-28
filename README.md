@@ -1,5 +1,5 @@
-# AutoCompleteEditText
-自动补全EditText，[我的博客](http://sumile.cn/archives/797 "我的博客")
+﻿# AutoCompleteEditText
+自动补全EditText，[我的博客](http://sumile.cn/archives/797.html "我的博客")
 # 效果 #
 ![image](https://github.com/wudkj/AutoCompleteEditText/raw/master/screen/autocomplete.gif)
 ## 使用方法   
